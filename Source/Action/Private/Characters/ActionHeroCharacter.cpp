@@ -1,12 +1,15 @@
 #include "Characters/ActionHeroCharacter.h"
 #include "ActionGameplayTags.h"
 #include "EnhancedInputSubsystems.h"
+#include "AbilitySystem/ActionAbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/Input/ActionInputComponent.h"
 #include "DataAssets/Input/DataAsset_InputConfig.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+
+#include "ActionDebugHelper.h"
 
 AActionHeroCharacter::AActionHeroCharacter()
 {
@@ -36,6 +39,19 @@ AActionHeroCharacter::AActionHeroCharacter()
 	GetCharacterMovement()->SetCrouchedHalfHeight(70.f);
 	JumpMaxCount = 2;
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
+}
+
+void AActionHeroCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (ActionAbilitySystemComponent && ActionAttributeSet)
+	{	
+		const FString ASCText = FString::Printf(TEXT("Owner Actor: %s, AvatarActor: %s"),*ActionAbilitySystemComponent->GetOwnerActor()->GetActorLabel(),*ActionAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
+
+		Debug::Print(TEXT("Ability system component valid. ") + ASCText,FColor::Green);
+		Debug::Print(TEXT("AttributeSet valid. ") + ASCText,FColor::Green);
+	}
 }
 
 void AActionHeroCharacter::BeginPlay()

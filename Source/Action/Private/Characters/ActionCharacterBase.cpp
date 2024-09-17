@@ -1,4 +1,6 @@
 #include "Characters/ActionCharacterBase.h"
+#include "AbilitySystem/ActionAbilitySystemComponent.h"
+#include "AbilitySystem/ActionAttributeSet.h"
 
 // Sets default values
 AActionCharacterBase::AActionCharacterBase()
@@ -8,4 +10,23 @@ AActionCharacterBase::AActionCharacterBase()
 	PrimaryActorTick.bStartWithTickEnabled = false;
 
 	GetMesh()->bReceivesDecals = false;
+
+	ActionAbilitySystemComponent = CreateDefaultSubobject<UActionAbilitySystemComponent>(TEXT("ActionAbilitySystemComponent"));
+
+	ActionAttributeSet = CreateDefaultSubobject<UActionAttributeSet>(TEXT("ActionAttributeSet"));
+}
+
+UAbilitySystemComponent* AActionCharacterBase::GetAbilitySystemComponent() const
+{
+	return GetActionAbilitySystemComponent();
+}
+
+void AActionCharacterBase::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (ActionAbilitySystemComponent)
+	{
+		ActionAbilitySystemComponent->InitAbilityActorInfo(this,this);
+	}
 }
