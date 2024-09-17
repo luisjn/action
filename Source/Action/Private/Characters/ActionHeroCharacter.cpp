@@ -8,6 +8,7 @@
 #include "DataAssets/Input/DataAsset_InputConfig.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "DataAssets/StartUpData/DataAsset_HeroStartUpData.h"
 
 #include "ActionDebugHelper.h"
 
@@ -45,12 +46,12 @@ void AActionHeroCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	if (ActionAbilitySystemComponent && ActionAttributeSet)
-	{	
-		const FString ASCText = FString::Printf(TEXT("Owner Actor: %s, AvatarActor: %s"),*ActionAbilitySystemComponent->GetOwnerActor()->GetActorLabel(),*ActionAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
-
-		Debug::Print(TEXT("Ability system component valid. ") + ASCText,FColor::Green);
-		Debug::Print(TEXT("AttributeSet valid. ") + ASCText,FColor::Green);
+	if (!CharacterStartUpData.IsNull())
+	{
+		if (UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.LoadSynchronous())
+		{
+			LoadedData->GiveToAbilitySystemComponent(ActionAbilitySystemComponent);
+		}
 	}
 }
 

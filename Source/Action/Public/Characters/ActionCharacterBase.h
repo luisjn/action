@@ -7,6 +7,7 @@
 
 class UActionAbilitySystemComponent;
 class UActionAttributeSet;
+class UDataAsset_StartUpDataBase;
 
 UCLASS()
 class ACTION_API AActionCharacterBase : public ACharacter, public IAbilitySystemInterface
@@ -31,6 +32,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
 	UActionAttributeSet* ActionAttributeSet;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CharacterData")
+	TSoftObjectPtr<UDataAsset_StartUpDataBase> CharacterStartUpData;
 
 public:
 	FORCEINLINE UActionAbilitySystemComponent* GetActionAbilitySystemComponent() const {return ActionAbilitySystemComponent;}

@@ -28,5 +28,7 @@ void AActionCharacterBase::PossessedBy(AController* NewController)
 	if (ActionAbilitySystemComponent)
 	{
 		ActionAbilitySystemComponent->InitAbilityActorInfo(this,this);
+
+		ensureMsgf(!CharacterStartUpData.IsNull(),TEXT("Forgot to assign start up data to %s"),*GetName());
 	}
 }
