@@ -1,5 +1,4 @@
 #include "Characters/ActionHeroCharacter.h"
-#include "ActionDebugHelper.h"
 #include "ActionGameplayTags.h"
 #include "EnhancedInputSubsystems.h"
 #include "Camera/CameraComponent.h"
@@ -34,6 +33,7 @@ AActionHeroCharacter::AActionHeroCharacter()
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
 	GetCharacterMovement()->JumpZVelocity = 500.f;
 	GetCharacterMovement()->AirControl = 0.35f;
+	GetCharacterMovement()->SetCrouchedHalfHeight(70.f);
 	JumpMaxCount = 2;
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 }
@@ -41,8 +41,6 @@ AActionHeroCharacter::AActionHeroCharacter()
 void AActionHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Debug::Print(TEXT("Working"));
 }
 
 void AActionHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -63,7 +61,7 @@ void AActionHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	ActionInputComponent->BindNativeInputAction(InputConfigDataAsset,ActionGameplayTags::InputTag_Look,ETriggerEvent::Triggered,this,&ThisClass::Input_Look);
 	ActionInputComponent->BindNativeInputAction(InputConfigDataAsset,ActionGameplayTags::InputTag_Jump,ETriggerEvent::Started,this,&ACharacter::Jump);
 	ActionInputComponent->BindNativeInputAction(InputConfigDataAsset,ActionGameplayTags::InputTag_Jump,ETriggerEvent::Completed,this,&ACharacter::StopJumping);
-	ActionInputComponent->BindNativeInputAction(InputConfigDataAsset,ActionGameplayTags::InputTag_Crouch,ETriggerEvent::Triggered,this,&ThisClass::Input_Crouch);
+	ActionInputComponent->BindNativeInputAction(InputConfigDataAsset,ActionGameplayTags::InputTag_Crouch,ETriggerEvent::Started,this,&ThisClass::Input_Crouch);
 	ActionInputComponent->BindNativeInputAction(InputConfigDataAsset,ActionGameplayTags::InputTag_Crouch,ETriggerEvent::Completed,this,&ACharacter::UnCrouch, false);
 }
 
