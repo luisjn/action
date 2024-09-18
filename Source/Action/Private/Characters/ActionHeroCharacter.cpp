@@ -9,6 +9,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "DataAssets/StartUpData/DataAsset_HeroStartUpData.h"
+#include "Components/Combat/HeroCombatComponent.h"
 
 #include "ActionDebugHelper.h"
 
@@ -40,6 +41,8 @@ AActionHeroCharacter::AActionHeroCharacter()
 	GetCharacterMovement()->SetCrouchedHalfHeight(70.f);
 	JumpMaxCount = 2;
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
+
+	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
 }
 
 void AActionHeroCharacter::PossessedBy(AController* NewController)
@@ -80,6 +83,8 @@ void AActionHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	ActionInputComponent->BindNativeInputAction(InputConfigDataAsset,ActionGameplayTags::InputTag_Jump,ETriggerEvent::Completed,this,&ACharacter::StopJumping);
 	ActionInputComponent->BindNativeInputAction(InputConfigDataAsset,ActionGameplayTags::InputTag_Crouch,ETriggerEvent::Started,this,&ThisClass::Input_Crouch);
 	ActionInputComponent->BindNativeInputAction(InputConfigDataAsset,ActionGameplayTags::InputTag_Crouch,ETriggerEvent::Completed,this,&ACharacter::UnCrouch, false);
+
+	ActionInputComponent->BindAbilityInputAction(InputConfigDataAsset,this,&ThisClass::Input_AbilityInputPressed,&ThisClass::Input_AbilityInputReleased);
 }
 
 void AActionHeroCharacter::Input_Move(const FInputActionValue& InputActionValue)
@@ -124,4 +129,14 @@ void AActionHeroCharacter::Input_Crouch(const FInputActionValue& InputActionValu
 	{
 		Crouch(false);
 	}
+}
+
+void AActionHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
+{
+	ActionAbilitySystemComponent->OnAbilityInputPressed(InInputTag);
+}
+
+void AActionHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
+{
+	ActionAbilitySystemComponent->OnAbilityInputReleased(InInputTag);
 }

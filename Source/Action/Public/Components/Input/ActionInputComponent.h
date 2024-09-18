@@ -16,6 +16,9 @@ class ACTION_API UActionInputComponent : public UEnhancedInputComponent
 public:
 	template<class UserObject,typename CallbackFunc, typename... VarTypes>
 	void BindNativeInputAction(const UDataAsset_InputConfig* InInputConfig,const FGameplayTag& InInputTag,ETriggerEvent TriggerEvent,UserObject* ContextObject,CallbackFunc Func,VarTypes... Vars);
+
+	template<class UserObject,typename CallbackFunc>
+	void BindAbilityInputAction(const UDataAsset_InputConfig* InInputConfig,UserObject* ContextObject,CallbackFunc InputPressedFunc,CallbackFunc InputReleasedFunc);
 };
 
 template<class UserObject, typename CallbackFunc, typename... VarTypes>
@@ -26,5 +29,20 @@ inline void UActionInputComponent::BindNativeInputAction(const UDataAsset_InputC
 	if (UInputAction* FoundAction = InInputConfig->FindNativeInputActionByTag(InInputTag))
 	{
 		BindAction(FoundAction,TriggerEvent,ContextObject,Func,Vars...);
+	}
+}
+
+template <class UserObject, typename CallbackFunc>
+void UActionInputComponent::BindAbilityInputAction(const UDataAsset_InputConfig* InInputConfig,
+	UserObject* ContextObject, CallbackFunc InputPressedFunc, CallbackFunc InputReleasedFunc)
+{
+	checkf(InInputConfig,TEXT("Input config data asset is null,can not proceed with binding"));
+
+	for (const FActionInputActionConfig& AbilityInputActionConfig : InInputConfig->AbilityInputActions)
+	{
+		if(!AbilityInputActionConfig.IsValid()) continue;
+
+		BindAction(AbilityInputActionConfig.InputAction,ETriggerEvent::Started,ContextObject,InputPressedFunc,AbilityInputActionConfig.InputTag);
+		BindAction(AbilityInputActionConfig.InputAction,ETriggerEvent::Completed,ContextObject,InputReleasedFunc,AbilityInputActionConfig.InputTag);
 	}
 }
