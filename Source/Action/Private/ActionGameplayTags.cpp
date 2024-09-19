@@ -7,12 +7,15 @@ namespace ActionGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Look, "InputTag.Look")
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Jump, "InputTag.Jump")
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Crouch, "InputTag.Crouch")
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_Dash, "InputTag.Dash")
 	
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_EquipAxe,"InputTag.EquipAxe")
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_UnequipAxe,"InputTag.UnequipAxe")
 	
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_LightAttack_Axe,"InputTag.LightAttack.Axe")
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_HeavyAttack_Axe,"InputTag.HeavyAttack.Axe")
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_MustBeHeld,"InputTag.MustBeHeld")
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_MustBeHeld_Block,"InputTag.MustBeHeld.Block")
 
 	// Player tags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Axe, "Player.Weapon.Axe")
@@ -22,9 +25,14 @@ namespace ActionGameplayTags
 	
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_Light_Axe,"Player.Ability.Attack.Light.Axe")
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_Heavy_Axe,"Player.Ability.Attack.Heavy.Axe")
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Block,"Player.Ability.Block")
+	
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Dash,"Player.Ability.Dash")
 	
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Equip_Axe,"Player.Event.Equip.Axe")
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Unequip_Axe,"Player.Event.Unequip.Axe")
 	
 	UE_DEFINE_GAMEPLAY_TAG(Player_Status_JumpToFinisher,"Player.Status.JumpToFinisher")
+	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Dashing,"Player.Status.Dashing")
+	UE_DEFINE_GAMEPLAY_TAG(Player_Status_Blocking,"Player.Status.Blocking")
 }

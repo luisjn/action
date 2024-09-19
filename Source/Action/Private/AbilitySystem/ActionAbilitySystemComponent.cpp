@@ -1,5 +1,6 @@
 #include "AbilitySystem/ActionAbilitySystemComponent.h"
-#include "AbilitySystem/Abilities/ActionGameplayAbility.h"
+#include "AbilitySystem/Abilities/ActionHeroGameplayAbility.h"
+#include "ActionGameplayTags.h"
 
 void UActionAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)
 {
@@ -18,6 +19,17 @@ void UActionAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& In
 
 void UActionAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInputTag)
 {
+	if (!InInputTag.IsValid() || !InInputTag.MatchesTag(ActionGameplayTags::InputTag_MustBeHeld))
+	{
+		return;
+	}
+	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{  
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag) && AbilitySpec.IsActive())
+		{
+			CancelAbilityHandle(AbilitySpec.Handle);
+		}
+	}
 }
 
 void UActionAbilitySystemComponent::GrantHeroWeaponAbilities(

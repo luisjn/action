@@ -41,3 +41,8 @@ void UActionFunctionLibrary::BP_DoesActorHaveTag(AActor* InActor, FGameplayTag T
 {
 	OutConfirmType = NativeDoesActorHaveTag(InActor,TagToCheck)? EActionConfirmType::Yes : EActionConfirmType::No;
 }
+
+float UActionFunctionLibrary::GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, float InLevel)
+{
+	return InScalableFloat.GetValueAtLevel(InLevel);
+}

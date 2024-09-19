@@ -5,6 +5,7 @@
 #include "ActionFunctionLibrary.generated.h"
 
 class UActionAbilitySystemComponent;
+struct FScalableFloat;
 
 UENUM()
 enum class EActionConfirmType : uint8
@@ -34,4 +35,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Action|FunctionLibrary", meta = (DisplayName = "Does Actor Have Tag", ExpandEnumAsExecs = "OutConfirmType"))
 	static void BP_DoesActorHaveTag(AActor* InActor,FGameplayTag TagToCheck,EActionConfirmType& OutConfirmType);
+
+	UFUNCTION(BlueprintPure, Category = "Action|FunctionLibrary", meta = (CompactNodeTitle = "Get Value At Level"))
+	static float GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat,float InLevel = 1.f);
 };

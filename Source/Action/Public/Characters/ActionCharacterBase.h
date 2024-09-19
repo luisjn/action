@@ -8,6 +8,7 @@
 class UActionAbilitySystemComponent;
 class UActionAttributeSet;
 class UDataAsset_StartUpDataBase;
+class UMotionWarpingComponent;
 
 UCLASS()
 class ACTION_API AActionCharacterBase : public ACharacter, public IAbilitySystemInterface
@@ -35,6 +36,9 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CharacterData")
 	TSoftObjectPtr<UDataAsset_StartUpDataBase> CharacterStartUpData;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "MotionWarping")
+	UMotionWarpingComponent* MotionWarpingComponent;
 
 public:
 	FORCEINLINE UActionAbilitySystemComponent* GetActionAbilitySystemComponent() const {return ActionAbilitySystemComponent;}

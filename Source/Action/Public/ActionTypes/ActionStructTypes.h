@@ -3,7 +3,7 @@
 #include "ActionStructTypes.generated.h"
 
 class UActionHeroLinkedAnimLayer;
-class UActionGameplayAbility;
+class UActionHeroGameplayAbility;
 class UInputMappingContext;
 
 USTRUCT(BlueprintType)
@@ -15,7 +15,7 @@ struct FActionHeroAbilitySet
 	FGameplayTag InputTag;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<UActionGameplayAbility> AbilityToGrant;
+	TSubclassOf<UActionHeroGameplayAbility> AbilityToGrant;
 
 	bool IsValid() const;
 };

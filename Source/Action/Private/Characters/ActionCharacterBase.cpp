@@ -1,6 +1,7 @@
 #include "Characters/ActionCharacterBase.h"
 #include "AbilitySystem/ActionAbilitySystemComponent.h"
 #include "AbilitySystem/ActionAttributeSet.h"
+#include "MotionWarpingComponent.h"
 
 // Sets default values
 AActionCharacterBase::AActionCharacterBase()
@@ -14,6 +15,8 @@ AActionCharacterBase::AActionCharacterBase()
 	ActionAbilitySystemComponent = CreateDefaultSubobject<UActionAbilitySystemComponent>(TEXT("ActionAbilitySystemComponent"));
 
 	ActionAttributeSet = CreateDefaultSubobject<UActionAttributeSet>(TEXT("ActionAttributeSet"));
+
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 }
 
 UAbilitySystemComponent* AActionCharacterBase::GetAbilitySystemComponent() const

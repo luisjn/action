@@ -16,7 +16,8 @@ public class Action : ModuleRules
 			"InputCore", 
 			"EnhancedInput",
 			"GameplayTags",
-			"GameplayTasks"
+			"GameplayTasks",
+			"MotionWarping"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
