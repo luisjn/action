@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
+#include "Interfaces/PawnUIInterface.h"
 #include "ActionCharacterBase.generated.h"
 
 class UActionAbilitySystemComponent;
@@ -11,7 +12,7 @@ class UDataAsset_StartUpDataBase;
 class UMotionWarpingComponent;
 
 UCLASS()
-class ACTION_API AActionCharacterBase : public ACharacter, public IAbilitySystemInterface
+class ACTION_API AActionCharacterBase : public ACharacter, public IAbilitySystemInterface, public IPawnUIInterface
 {
 	GENERATED_BODY()
 
@@ -22,6 +23,10 @@ public:
 	//~ Begin IAbilitySystemInterface Interface.
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	//~ End IAbilitySystemInterface Interface
+
+	//~ Begin IPawnUIInterface Interface
+	virtual UPawnUIComponent* GetPawnUIComponent() const override;
+	//~ End IPawnUIInterface Interface
 
 protected:
 	//~ Begin APawn Interface.

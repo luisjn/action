@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "DataAssets/StartUpData/DataAsset_HeroStartUpData.h"
 #include "Components/Combat/HeroCombatComponent.h"
+#include "Components/UI/HeroUIComponent.h"
 
 #include "ActionDebugHelper.h"
 
@@ -43,6 +44,8 @@ AActionHeroCharacter::AActionHeroCharacter()
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 
 	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
+
+	HeroUIComponent = CreateDefaultSubobject<UHeroUIComponent>(TEXT("HeroUIComponent"));
 }
 
 void AActionHeroCharacter::PossessedBy(AController* NewController)
@@ -139,4 +142,14 @@ void AActionHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
 void AActionHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
 {
 	ActionAbilitySystemComponent->OnAbilityInputReleased(InInputTag);
+}
+
+UPawnUIComponent* AActionHeroCharacter::GetPawnUIComponent() const
+{
+	return HeroUIComponent;
+}
+
+UHeroUIComponent* AActionHeroCharacter::GetHeroUIComponent() const
+{
+	return HeroUIComponent;
 }

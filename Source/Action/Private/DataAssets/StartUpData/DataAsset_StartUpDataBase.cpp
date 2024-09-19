@@ -1,6 +1,4 @@
 #include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
-
-#include "GameplayAbilitySpec.h"
 #include "AbilitySystem/ActionAbilitySystemComponent.h"
 #include "AbilitySystem/Abilities/ActionGameplayAbility.h"
 
@@ -10,7 +8,23 @@ void UDataAsset_StartUpDataBase::GiveToAbilitySystemComponent(UActionAbilitySyst
 	check(InAscToGive);
 
 	GrantAbilities(ActivateOnGivenAbilities,InAscToGive,ApplyLevel);
-	GrantAbilities(ReactiveAbilities,InAscToGive,ApplyLevel); 
+	GrantAbilities(ReactiveAbilities,InAscToGive,ApplyLevel);
+
+	if (!StartUpGameplayEffects.IsEmpty())
+	{
+		for (const TSubclassOf < UGameplayEffect >& EffectClass : StartUpGameplayEffects)
+		{
+			if(!EffectClass) continue;
+
+			UGameplayEffect* EffectCDO = EffectClass->GetDefaultObject<UGameplayEffect>();
+
+			InAscToGive->ApplyGameplayEffectToSelf(
+				EffectCDO,
+				ApplyLevel,
+				InAscToGive->MakeEffectContext()
+			);
+		}
+	}
 }
 
 void UDataAsset_StartUpDataBase::GrantAbilities(const TArray<TSubclassOf<UActionGameplayAbility>>& InAbilitiesToGive,
